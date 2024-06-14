@@ -31,9 +31,25 @@ class TableComponent extends HTMLElement {
     return this._title;
   }
 
+  static get observedAttributes() {
+    return ['title', 'data'];
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === 'title' && oldValue !== newValue) {
+      this._title = newValue;
+    }
+    if (name === 'data' && oldValue !== newValue) {
+      this._data = newValue;
+    }
+  }
+
   _render() {
     ReactDOM.render(<Table title={this._title} data={this._data} />, this);
   }
 }
 
-customElements.define('table-web-component', TableComponent);
+const tagName = 'table-web-component';
+if(!customElements.get(tagName)) {
+  customElements.define(tagName, TableComponent);
+}

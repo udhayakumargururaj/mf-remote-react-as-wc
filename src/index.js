@@ -1,2 +1,2 @@
-import('./bootstrap');
-import('./TableWebComponent');
+// import('./bootstrap');
+import './TableWebComponent';

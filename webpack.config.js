@@ -11,15 +11,22 @@ module.exports = {
   },
   output: {
     publicPath: 'http://localhost:3001/',
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'main.js'
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
-        use: 'babel-loader',
+        test: /\.jsx?$/,  // Support both .js and .jsx files
         exclude: /node_modules/,
-      }
+        use: {
+          loader: 'babel-loader',
+        },
+      },
     ],
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
   plugins: [
     new ModuleFederationPlugin({
@@ -29,17 +36,7 @@ module.exports = {
         './Button': './src/Button',
         './Table': './src/Table',
         './TableComponent': './src/TableWebComponent',
-      },
-      shared: {
-        react: {
-          singleton: true,
-          requiredVersion: '^17.0.2',
-        },
-        'react-dom': {
-          singleton: true,
-          requiredVersion: '^17.0.2',
-        },
-      },
+      }
     }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
